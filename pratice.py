@@ -202,3 +202,17 @@ def check():
 check()
 
 
+class dog:
+    species = 'xyz' # class variable
+
+    def __init__(self,name,age) :
+        self.name = name # instance varaible
+        self.age = age
+    def show(self):
+        print(f"Dog name is {self.name} and having age of {self.age}")
+        
+
+dog1 = dog('aaaaa',22)
+dog2 = dog('bbbbb',33)     
+dog1.species = 'mmmm'
+print(dog.species)
