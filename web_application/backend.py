@@ -42,7 +42,6 @@ class Tickets(Event):
             book = int(input("enter the id to book the tickets"))
             if(book in self.event_info ):
                 amount =int(input("enter the amount to book the tickets"))
-                print(self.event_info[book]['price'])
                 if(amount>=self.event_info[book]['price']):
                     print("congratulations your ticket has booked ")
                     Tickets.booked.append(book)
