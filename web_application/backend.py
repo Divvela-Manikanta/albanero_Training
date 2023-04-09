@@ -1,12 +1,5 @@
 class Event:
-    event_event_id = []
-    event_name_list = []
-    event_venue_list = []
-    event_date_list = []
-    event_time_list = []
-    event_category_list = []
-    event_price_list = []
-
+    event_info = {}
 
     def __init__(self,name,venue,date,time,category,price):
         self.name = name
@@ -20,23 +13,16 @@ class Event:
         """
         create an event 
         """
-        Event.event_name_list.append(self.name)
-        Event.event_venue_list.append(self.venue)
-        Event.event_date_list.append(self.date)
-        Event.event_time_list.append(self.time)
-        Event.event_category_list.append(self.category)
-        Event.event_price_list.append(self.price)
-        id  = len(Event.event_name_list)
-        Event.event_event_id.append(id)
+        id  = len(Event.event_info)+1
+        Event.event_info[id] = dict({'id':id,'name':self.name, 'venue':self.venue,'date':self.date,'time': self.time,'category':self.category,'price':self.price})
     
-
     def view_event(cls):
         """
         view the event.
 
         """
-        for i in range(len(cls.event_name_list)):
-            print(f"""id:{cls.event_event_id}---The event name is {cls.event_name_list[i]} organized at {cls.event_venue_list[i]} date={cls.event_date_list[i]} and time={cls.event_time_list[i]}. The event comes under {cls.event_category_list[i]} and prices of the ticket starts from {cls.event_price_list[i]}""")
+        for id in cls.event_info:
+            print(f"""id:{cls.event_info[id]['id']}--->The event name is {cls.event_info[id]['name']} organized at {cls.event_info[id]['venue']} date={cls.event_info[id]['date']} and time={cls.event_info[id]['time']}. The event comes under {cls.event_info[id]['category']} and prices of the ticket starts from {cls.event_info[id]['price']}""")
             print(" ")
 
 class Tickets(Event):
@@ -53,13 +39,13 @@ class Tickets(Event):
         self.view_event()
         
         try:
-            book = int(input("enter the event_event_id to book the tickets"))
-            if(book in self.event_event_id ):
-                index = self.event_event_id.index(book)
+            book = int(input("enter the id to book the tickets"))
+            if(book in self.event_info ):
                 amount =int(input("enter the amount to book the tickets"))
-                if(amount>=self.event_price_list[index]):
+                print(self.event_info[book]['price'])
+                if(amount>=self.event_info[book]['price']):
                     print("congratulations your ticket has booked ")
-                    Tickets.booked.append(index)
+                    Tickets.booked.append(book)
                 else:
                     print("you have entred less price than ticket please go through options again")
                     self.book_ticket()
@@ -68,7 +54,7 @@ class Tickets(Event):
                 self.book_ticket()  
 
         except Exception as ex:
-            print("INVALID EVENT ID PLEASE TRY AGAIN WITH VALID EVENT-ID AS DISPLAYED")
+            print("SOMETHING WENT WRONG PLEASE TRY AGAIN WITH VALID EVENT-ID AS DISPLAYED")
             self.book_ticket()
     
 
@@ -78,8 +64,8 @@ class Tickets(Event):
 
         """
         if(len(cls.booked)>0):
-            for i in (cls.booked):
-                print(f"you have booked your tickets for The event {cls.event_name_list[i]} organized at {cls.event_venue_list[i]} date={cls.event_date_list[i]} and time={cls.event_time_list[i]}. The event comes under {cls.event_category_list[i]} and prices of the ticket is {cls.event_price_list[i]}")
+            for id in (cls.booked):
+                print(f"you have booked your tickets for The event The event name is {cls.event_info[id]['name']} organized at {cls.event_info[id]['venue']} date={cls.event_info[id]['date']} and time={cls.event_info[id]['time']}. The event comes under {cls.event_info[id]['category']} and prices of the ticket starts from {cls.event_info[id]['price']}")
         else:
             print("you have not booked any tickets")
 
